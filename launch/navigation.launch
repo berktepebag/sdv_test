@@ -1,0 +1,24 @@
+<?xml version="1.0" ?>
+<launch>
+    <arg name="map_file" default="$(find sdv_test)/maps/turtlehouse2.yaml"/>    
+    <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)"/>
+   
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find sdv_test)/rviz/gazebo_topdown.rviz"/>
+
+    <!-- Laser Unifier -->
+    <node name="laser_unifier" pkg="cob_scan_unifier" type="scan_unifier_node" respawn="false" output="screen">
+        <rosparam command="load" file="$(find sdv_control)/params/unifier.yaml"/>
+    </node>
+    <!-- Unified Laser Scan Reducer (otherwise slam toolbox does not work!) -->
+    <node pkg="sdv_test" name="slam_scan_reducer" type="slam_scan_reducer.py" output="screen"/>
+
+    <include file="$(find sdv_test)/launch/amcl.launch" />
+      
+    <!-- Slam Toolbox -->
+    <!-- <node name="slam_toolbox" pkg="slam_toolbox" type="async_slam_toolbox_node"  output="screen">
+        <rosparam command="load" file="$(find sdv_test)/config/mapper_params_online_async.yaml" />
+        <remap from="scan" to="scan_unified_fixed" />
+        <remap from="odom" to="tricycle_controller/odom" />
+    </node>     -->
+
+</launch>

@@ -1,0 +1,20 @@
+joint_state_controller:
+    type: joint_state_controller/JointStateController
+    publish_rate: 50
+
+traction_velocity_controller:
+  type: velocity_controllers/JointVelocityController
+  joint: drive_wheel_joint
+  pid: {p: 0.5, i: 0.2, d: 0}
+
+steering_velocity_controller:
+  type: velocity_controllers/JointVelocityController
+  joint: steer_joint
+  pid: {p: 0.5, i: 0.2, d: 0}
+
+steering_position_controller:
+  type: position_controllers/JointPositionController
+  joint: steer_joint
+  pid: {p: 0.95, i: 0.0, d: 0.15}
+
+

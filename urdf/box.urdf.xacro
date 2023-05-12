@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+    <xacro:macro name="box_macro" params="name x y z parent">
+        <link name="${name}_link">
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <box size="${x} ${y} ${z}"/>
+                </geometry>
+            </visual>
+        </link>
+
+        <joint name="${name}_${parent}_joint">
+            <parent link="${parent}"/>
+            <child link="${name}_link"/>
+        </joint>
+    </xacro:macro>
+</robot>
